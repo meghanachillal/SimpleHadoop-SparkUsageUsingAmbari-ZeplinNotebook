@@ -1,0 +1,80 @@
+1. /** Read snd display the three files from hdfs **/
+
+import org.apache.spark.sql.SparkSession
+
+val df = spark.read.json("/user/guest/flume/18-07-08/Log.1531080665465")
+
+val df2 = spark.read.csv("/user/guest/flume/18-07-08/Log.1531015974737")
+
+val df3 = spark.read.csv("/user/guest/flume/18-07-08/Log.1531015921443")
+
+// Displays the content of the DataFrame to stdout
+df.show()
+
+df2.show()
+
+df3.show()
+
+
+2.Display contents of RDD
+import org.apache.spark.sql.types._
+
+// Create an RDD
+val myRDD = spark.sparkContext.textFile("/user/guest/flume/18-07-08/Log.1531015921443")
+
+
+myRDD.collect().foreach(println)
+
+myRDD.count()
+
+3. Filter the records
+
+import org.apache.spark.sql.types._
+
+import org.apache.spark.sql.SparkSession
+
+val df = spark.read.json("/user/guest/flume/18-07-08/Log.1531080665465")
+
+//Filter for DataFrame
+val report = df.select ("*").where (array_contains (df("cities"), "portland"))
+
+report.show()
+
+// Create an RDD
+
+val rdd1 = spark.sparkContext.textFile("/user/guest/flume/18-07-08/Log.1531015974737")
+
+rdd1.collect().foreach(println)
+
+//Filter the RDD
+
+val newRDD = rdd1.filter(line => line.contains("a")).count()
+
+println(newRDD)
+
+println(s"Lines with a: $newRDD")
+
+
+
+
+import org.apache.spark.sql.types._
+
+import org.apache.spark.sql.SparkSession
+
+val rdd1 = spark.sparkContext.textFile("/user/guest/flume/18-07-08/Log.1531080665465")
+
+val rdd2 = spark.sparkContext.textFile("/user/guest/flume/18-07-08/Log.1531015974737")
+
+val rdd3 = spark.sparkContext.textFile("/user/guest/flume/18-07-08/Log.1531015921443")
+
+rdd1.collect().foreach(println)
+
+rdd2.collect().foreach(println)
+
+rdd3.collect().foreach(println)
+
+val filteredRDD = rdd1.filter(line => line.contains("a")).count()
+
+println(s"Line with a: $filteredRDD")
+
+

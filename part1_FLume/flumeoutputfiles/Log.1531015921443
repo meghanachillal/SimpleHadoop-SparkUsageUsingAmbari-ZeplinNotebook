@@ -1,0 +1,10 @@
+{
+  "squadName": "Super hero squad",
+  "homeTown": "Metro City",
+  "formed": 2016,
+  "secretBase": "Super tower",
+  "active": true
+}
+Copy the CSV File to the Ambari !! FLUME
+`
+This is some data to upload to hadoop. First test on Hadoop and Ambari....Success!!!!
